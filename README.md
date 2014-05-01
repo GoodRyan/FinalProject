@@ -2,11 +2,11 @@ FinalProject
 ============
 
 
-Required - Output GPS data to terminal
+Required - Output GPS stream to terminal.
 
-B - Interface remote control car with FPGA to allow car movement
+B - Parse GPS data into something usable by the vehicle and output data.
 
-A - Car moves after being given data provided by GPS
+A - Vehicle moves after being given data provided by GPS.
 
 
 18 April - Researched various GPS devices and picked one to order.
@@ -24,3 +24,5 @@ Next, I decide to take a look at the logic analyzer (LA). I power the GPS throug
 Next I will need to get the gps signal into my project. To accomplish this I will use the all purpose JB inputs. Looking at the master UCF file, I discover that JB(0) is at location T3, so I will use this as my GPS input. At this point I'm having trouble implementing a one bit input into my project. I found out the problem was I was using quotation marks in my MPD file instead of apostraphes, making the software believe it should expect a multi-bit input. Now i'm getting another error where it is not allowing me to use location T3, as it cannot be packed into a single IOB component. I discovered that I was using the same location pin twice from previous experimentation. I fixed that issue by setting the locations correctly, and now I need to write my C program to interpret the incoming data, convert it to ASCII and output it to the terminal.
 
 29 April - I start writing my C code by creating an unsigned char to store binary strings. Then, I put a temporary binary string 0b01000001 or "A" to test if I can send binary to the FPGA and generate ascii. This doesn't work. I test out sending "A". That doesn't work either. Next I try hex, 0x41. This doesn't work either. Not good. So I try reverting to code I know works. Receive a byte from the terminal and print it back. This doesn't work. At this point it has to be hardware related. 
+
+30 April - I resolved the problem by checking that the correct ELF file was being used, and finding that it wasn't. However, this lead to another problem where occasionally the FPGA would take countrol of my mouse and begin exiting programs whenever I wrote to the UART port. I spent three hours attempting to resolve this issue, but in the end I decided that the best course of action was to re-install Xilinx and re-follow the instructions for lab 4b. Once that is done, we will see if the problem persists.
