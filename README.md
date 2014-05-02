@@ -4,10 +4,9 @@ FinalProject
 
 Required - Output GPS stream to terminal.
 
-B - Parse GPS data into something usable by the vehicle and output data.
+B - Parse and output GPS data to one of the JB ports.
 
 A - Vehicle moves after being given data provided by GPS.
-
 
 18 April - Researched various GPS devices and picked one to order.
 
@@ -32,3 +31,5 @@ Out of curiosity, I decided to write a program that would only write to the FPGA
 Next I'm going to try and pull data off of the JB port I attach my GPS to by "anding" bits together. This was succesful. Unfortnatly the clock doesn't line up with the GPS, so I'm pulling in a lot more 0's and 1's than I should be. To resolve this I'll need to create a delay between bit grabs. A lot of the online community said that their microblaze had a clock speed of 50MHz, which is 20 microseconds. Based on this, i used the "nop" assemply command 5 times to create a 100 microsecond delay between each bit print. Unfortunately this still does not look correct. On further inspection the clock pin is set to 100000 kHz, or 10 nanoseconds... multiplying this by 10000 yields 100 microseconds. I'll need a loop that counts to 10000. This caused the terminal to stall out, meaning it was far too much of a delay. Actually I forgot to include an increment. Maybe i'll use that instead of nop. It looks like post increment takes about 21 clock cycles. I'll have the counter increment to 10000/21 ~ 477. I rounded up to be safe. This seems to be way too fast.
 
 Using time.h it looks like I can define 1000 clock cycles as one second. Nevermind, this doesn't work how I think it does.
+
+1 May - In order to determine that ammount of time it takes to accomplish a while loop, I'm going to change some of my JB signals to outputs, and connect them to the logic annalyzer while the while loop outputs to one of the JB ports every time it exectutes. Through experimentation, I have determined that my bottom row are all outputs, determined by where i place the high bit in my XIL_OUT sequence. Through setting the output bit high, performing timer++ and then setting the output bit low I have found that it takes about 140 nano seconds to perform the timer++ operation. I have also found that it takes 22.5 micro seconds to count to 100 with an incrementing timer. It looks like once I count past a certain point I start getting very inconsistent results. Nevermind, now I'm getting inconsistent results no matter what I count to. I tried re-writing the code multiple times, and placing it into a seperate method, all to no avail. I'll look at it again tomorrow.
