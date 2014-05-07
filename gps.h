@@ -11,11 +11,13 @@
 #include <xuartlite_l.h>
 #include <xparameters.h>
 
-void delay(unsigned char ammount);
+void delay(int ammount);
 
-void receive_data(unsigned char count, int size, unsigned char *data[]);
+//void receive_data(int size, char *(data[]));
 
-void storage(int size, unsigned char *data[]);
+//void storage(int size, char *(data[]));
+
+//void printStoredData(int size, char *(data[]));
 
 
 #endif /* GPS_H_ */
