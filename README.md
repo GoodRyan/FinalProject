@@ -44,4 +44,4 @@ I checked the time it takes to store the data received and it is extremely fast.
 
 6 May - I attempted to output the stored bits, but received nothing but high bits. I thought I could resolve the issue by anding the stored data, as the first 7 bits should be worthless. I received the same output which makes absolutely no sense.
 
-7 May - I completely revised my approach in order to avoid having to pass arrays into functions, I am now able to read a valuable bit stream into the terminal. Now I just need to convert it to ascii
+7 May - I completely revised my approach in order to avoid having to pass arrays into functions, I am now able to read a valuable bit stream into the terminal. Now I just need to convert it to ascii. I figured out why ascii printing wasn't working. Instead of doing a bitwise "OR" I was doing a boolean "OR". The difference is | compared to ||. This has been remedied. Working B functionality.
