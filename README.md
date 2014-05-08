@@ -4,7 +4,7 @@ FinalProject
 
 Required - Output GPS stream to terminal.
 
-B - Parse and output GPS data to one of the JB ports.
+B - Parse and output GPS data to terminal.
 
 A - Vehicle moves after being given data provided by GPS.
 
@@ -43,3 +43,5 @@ I checked the time it takes to store the data received and it is extremely fast.
 5 May - It looks lik my code is mostly working. It needs a longer delay however, and it exits at the wrong time. I can fix the exiting issue by resetting the high bit counter if the bits are not consecutive. After minor adjustments my timing is now dead on! Now I just need to ensure that my array is being filled as I want it to be. In order to determine this, I will experiment with a similar program in a C compiler. I installed TCC (tiny C compiler) and wrote some code in Notepad++. Unfortunately it looks like TCC won't let me write to memory. I found another compiler called "net beans" that I am going to try out.
 
 6 May - I attempted to output the stored bits, but received nothing but high bits. I thought I could resolve the issue by anding the stored data, as the first 7 bits should be worthless. I received the same output which makes absolutely no sense.
+
+7 May - I completely revised my approach in order to avoid having to pass arrays into functions, I am now able to read a valuable bit stream into the terminal. Now I just need to convert it to ascii
