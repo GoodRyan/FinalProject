@@ -8,11 +8,12 @@ int main(void)
   unsigned char escape = 0;
   int count = 0;
   unsigned char escape_counter = 0;
-  char bit;
-  char corrected_bit;
-  char gps_input;
+  unsigned char bit;
+  unsigned char gps_input;
   int size = 300;
-  char data[size];
+  unsigned char data[size];
+  unsigned char bit_tracker;
+  unsigned char ascii;
   start = XUartLite_RecvByte(0x84000000);
 
   if (start == '1'){
@@ -21,9 +22,13 @@ int main(void)
 	  while(escape != 1 && count < size){
 		  gps_input = Xil_In8(0x83000000);
 		  delay(2); //delays ensure noise isn't accepted as a bit drop
+
+		  //As soon as drop occurs, data collection can begin.
 		  if (gps_input == 0b00000000){
 
-			//gather data
+
+
+////////////////////gather data//////////////////////////////
 		  	while(escape != 1 && count < size){
 		  		Xil_Out8(0x83000004, 0b10000000);//allow for tracking of time to complete storage of
 		  										 //one bit.
@@ -50,22 +55,25 @@ int main(void)
 	  }
 
 
-	  	  //print data
+
+	  ///////////////////print data//////////////////////////////
 	  	  count = 0;
 	  	  escape = 0;
+	  	  bit_tracker = 0;
 	  	  while (count < size){
+	  		    ascii = 0b11111111;
+	  		  	while (bit_tracker < 10){
 	  			bit = data[count];
-	  			corrected_bit = 0b00000001 & bit;
-	  			//print high if bit is high, low if bit is low
-	  			if(corrected_bit == 0b00000001){
-	  				Xil_Out8(0x83000004, 0b01000000);
-	  				XUartLite_SendByte(0x84000000, '1');
+	  			bit = 0b11111110 | bit;
+	  			if (bit_tracker > 0 && bit_tracker < 9){
+	  				bit = rotate_right(bit, 9-bit_tracker); //the bits come in backwards and must be rotated appropriately
+	  				ascii = bit & ascii;
 	  			}
-	  			else{
-	  				Xil_Out8(0x83000004, 0b00000000);
-	  				XUartLite_SendByte(0x84000000, '0');
-	  			}
+	  			bit_tracker++;
 	  			count++;
+	  		  	}
+	  		  	bit_tracker = 0;
+	  			XUartLite_SendByte(0x84000000, ascii); //output ascii to terminal
 	  		}
 	  }
 	  }

@@ -13,11 +13,6 @@
 
 void delay(int ammount);
 
-//void receive_data(int size, char *(data[]));
-
-//void storage(int size, char *(data[]));
-
-//void printStoredData(int size, char *(data[]));
-
+unsigned char rotate_right(unsigned char x, int n);
 
 #endif /* GPS_H_ */
