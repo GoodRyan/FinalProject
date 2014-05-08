@@ -1,0 +1,23 @@
+#
+# pin constraints
+#
+NET GCLK LOC = "L15"  |  IOSTANDARD = "LVCMOS33";
+NET RESET LOC = "T15"  |  IOSTANDARD = "LVCMOS33"  |  TIG;
+#
+# additional constraints
+#
+
+NET "GCLK" TNM_NET = sys_clk_pin;
+TIMESPEC TS_sys_clk_pin = PERIOD sys_clk_pin 108 MHz;
+
+net axi_uartlite_0_RX_pin LOC=A16 | IOSTANDARD = LVCMOS33;
+net axi_uartlite_0_TX_pin LOC=B16 | IOSTANDARD = LVCMOS33;
+
+net JB_PORTS_OUT_pin(4) LOC = "T4";
+net JB_PORTS_OUT_pin(3) LOC = "V4";
+net JB_PORTS_OUT_pin(2) LOC = "T9";
+net JB_PORTS_OUT_pin(1) LOC = "V9";
+net JB_PORTS_OUT_pin(0) LOC = "N5";
+net JB_PORTS_IN_pin(2) LOC = "P6";
+net JB_PORTS_IN_pin(1) LOC = "R3";
+net JB_PORTS_IN_pin(0) LOC = "T3";
