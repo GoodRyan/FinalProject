@@ -1,12 +1,20 @@
 FinalProject
 ============
 
+Introduction
+============
+
+The purpose of this lab was to create a vehicle that took coordinate inputs, and drove itself to those coordinates using a GPS. Unfortunately, the lab ended up revolving around the GPS as it was far more difficult to implement that I had expected. This is due to the fact that the Spartan6 can only interpret 9600 Baud signals when they come in through the UART port. Since I was unable to utilize this port, I had to pass it into a general port and interpret the signal myself.
+
+Implementation/Test/Debug
+===============
 
 Required - Output GPS stream to terminal.
 
 B - Parse and output GPS data to terminal.
 
 A - Vehicle moves after being given data provided by GPS.
+
 
 18 April - Researched various GPS devices and picked one to order.
 
@@ -45,3 +53,9 @@ I checked the time it takes to store the data received and it is extremely fast.
 6 May - I attempted to output the stored bits, but received nothing but high bits. I thought I could resolve the issue by anding the stored data, as the first 7 bits should be worthless. I received the same output which makes absolutely no sense.
 
 7 May - I completely revised my approach in order to avoid having to pass arrays into functions, I am now able to read a valuable bit stream into the terminal. Now I just need to convert it to ascii. I figured out why ascii printing wasn't working. Instead of doing a bitwise "OR" I was doing a boolean "OR". The difference is | compared to ||. This has been remedied. Working B functionality.
+
+
+Conclusion
+==========
+
+This lab made me much more comfortable using the logic analyzer. It will now be my go to tool whenver i need to figure out the nature of a digital signal. I also greatly improved my ability to use the C programming language to handle bits, and move them into the configuration I desire. If I were to change this lab, I would allow students to use all the tools that they have learned (arduino uno, etc) as this is supposed to be a mini-capstone.
